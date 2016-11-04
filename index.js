@@ -1,16 +1,15 @@
 global.apilist = [];
-global.conf = config;
-global.db = db;
 require('./connectmsd')
 var restify = require('restify');
+var api = require('./api');
+var db = require('./lib/db');
 var config = require('./config/config');
 var server = restify.createServer({
     name: config.MicroService.Name,
     version: config.MicroService.Ver
 });
-
-var api = require('./api');
-var db = require('./lib/db');
+global.conf = config;
+global.db = db;
 
 
 

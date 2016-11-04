@@ -18,8 +18,51 @@ function handle(req, res, next, type) {
     data.data = [];
 
     var api = global.apilist[req.params.cmd];
+    if (api) {
+        if (type == api.Method) {
+            var sql = getsql(sql, api);
 
-    console.log(api);
+            sql = precmd(sql, req.params);
+            console.log(sql);
+            global.db(sql, function(err, vals, fields) {
+                if (err) {
+                    console.log(err.message);
+                    data.state = -1;
+                    data.msg = err.message;
+                } else {
+
+                    data.state = 0;
+                    if (vals) {
+                        if (vals.protocol41) {
+                            data.data = [];
+                        } else if (vals.length > 0) {
+                            if (vals[vals.length - 1].protocol41) {
+                                data.data = vals.slice(0, vals.length - 1);
+                            } else {
+                                data.data = vals;
+                            }
+                        }
+                        console.log(vals);
+                    }
+                    data.msg = 'Success';
+                }
+                res.send(data);
+            });
+        } else {
+            data.state = -1;
+            data.msg = 'Method not allowed';
+            data.data = [];
+            res.send(data);
+        }
+
+    } else {
+        console.log('Invalid API');
+        data.msg = 'Invalid API';
+        res.send(data);
+
+    }
+
+    console.log('request:' + req.params.cmd);
 }
 
 
