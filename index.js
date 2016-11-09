@@ -12,7 +12,9 @@ global.conf = config;
 global.db = db;
 
 
-
+server.use(restify.acceptParser(server.acceptable));
+server.use(restify.queryParser());
+server.use(restify.bodyParser());
 
 server.get('/:cmd', api.base.get);
 server.post('/:cmd', api.base.post);
