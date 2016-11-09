@@ -4,10 +4,11 @@ function connectMicroDiscover() {
     let MS_HOST=process.env.MS_HOST;
     let MS_NAME=process.env.MS_NAME;
     let MS_UUID=process.env.MS_UUID;
-
+    let APP_ID=process.env.APP_ID;
     let transmissionDataJson=   { "MS_UUID": MS_UUID,
     "MS_NAME": MS_NAME,
-    "MS_HOST":MS_HOST}
+    "MS_HOST":MS_HOST,
+    "APP_ID":APP_ID}
 
     let transmissionData='!@#'+JSON.stringify(transmissionDataJson)+'%^&*';
 

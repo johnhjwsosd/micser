@@ -14,8 +14,8 @@ global.db = db;
 
 
 
-server.get('/api/:cmd', api.base.get);
-server.post('/api/:cmd', api.base.post);
+server.get('/:cmd', api.base.get);
+server.post('/:cmd', api.base.post);
 
 
 server.listen(config.Service.Port, function() {
