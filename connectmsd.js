@@ -5,10 +5,13 @@ function connectMicroDiscover() {
     let MS_NAME=process.env.MS_NAME;
     let MS_UUID=process.env.MS_UUID;
     let APP_ID=process.env.APP_ID;
+    let APP_KEY=process.env.APP_KEY;
     let transmissionDataJson=   { "MS_UUID": MS_UUID,
     "MS_NAME": MS_NAME,
     "MS_HOST":MS_HOST,
-    "APP_ID":APP_ID}
+    "APP_ID":APP_ID,
+    "APP_KEY":APP_KEY
+    }
 
     let transmissionData='!@#'+JSON.stringify(transmissionDataJson)+'%^&*';
 
@@ -64,11 +67,11 @@ function convertReceiveData(data){
 }
 
 function addApiList(resultData){
-        for (var i = 0; i < resultData.apiList.length; i++) {
+        for (var i = 0; i < resultData.length; i++) {
         var api = {};
-        api.Cmd = resultData.apiList[i].Cmd;
-        api.Method = resultData.apiList[i].Method;
-        api.MultiCmd = resultData.apiList[i].MultiCmd;
-        global.apilist[resultData.apiList[i].apiName] = api;
+        api.Cmd = resultData[i].Cmd;
+        api.Method = resultData[i].Method;
+        api.MultiCmd = resultData[i].MultiCmd;
+        global.apilist[resultData[i].Name] = api;
     }
 }

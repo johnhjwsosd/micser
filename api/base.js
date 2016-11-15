@@ -30,7 +30,6 @@ function handle(req, res, next, type) {
                     data.state = -1;
                     data.msg = err.message;
                 } else {
-
                     data.state = 0;
                     if (vals) {
                         if (vals.protocol41) {
