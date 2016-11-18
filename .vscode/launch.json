@@ -9,7 +9,7 @@
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
-            "preLaunchTask": null,
+            "preLaunchTask": null,  
             "runtimeExecutable": null,
             "runtimeArgs": [
                 "--harmony_async_await"

@@ -1,11 +1,13 @@
 exports.name = 'base';
 
-exports.get = function(req, res, next) {
+exports.get = function (req, res, next) {
     handle(req, res, next, 'get');
 }
-exports.post = function(req, res, next) {
+exports.post = function (req, res, next) {
     handle(req, res, next, 'post');
 }
+
+let i = 0;
 
 function handle(req, res, next, type) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,14 +19,14 @@ function handle(req, res, next, type) {
     };
     data.data = [];
 
+    console.log('------------------------  start');
     var api = global.apilist[req.params.cmd];
     if (api) {
         if (type == api.Method) {
             var sql = getsql(sql, api);
-
+            console.log('    sql :' +sql);
             sql = precmd(sql, req.params);
-            console.log(sql);
-            global.db(sql, function(err, vals, fields) {
+            global.db(sql, function (err, vals, fields) {
                 if (err) {
                     console.log(err.message);
                     data.state = -1;
@@ -41,11 +43,14 @@ function handle(req, res, next, type) {
                                 data.data = vals;
                             }
                         }
-                        console.log(vals);
+                        //console.log(vals);
+                        console.log('------------------------ end');
                     }
                     data.msg = 'Success';
                 }
                 res.send(data);
+                console.log(data.data);
+                console.log('!!!!! send');
             });
         } else {
             data.state = -1;
@@ -60,20 +65,19 @@ function handle(req, res, next, type) {
         res.send(data);
 
     }
-
-    console.log('request:' + req.params.cmd);
+    console.log(i+ ' request:' + req.params.cmd);
+    i++;
 }
 
 
 function precmd(cmd, params) {
-    Object.keys(params).forEach(function(key) {
-            if (key != 'cmd') {
-                var reg = new RegExp('@' + key, "g");
-                var value = params[key];
-                cmd = cmd.replace(reg, value);
-            }
-        })
-        console.log(cmd); 
+    Object.keys(params).forEach(function (key) {
+        if (key != 'cmd') {
+            var reg = new RegExp('@' + key, "g");
+            var value = params[key];
+            cmd = cmd.replace(reg, value);
+        }
+    })
     return cmd;
 }
 
@@ -82,7 +86,7 @@ function getsql(sql, api) {
     sql = sql ? sql : '';
     if (api.MultiCmd == 1) {
         var list = api.Cmd.split('|');
-        list.forEach(function(element) {
+        list.forEach(function (element) {
             var apitmp = global.apilist[element];
             sql = getsql(sql, apitmp);
         }, this);
