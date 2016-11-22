@@ -10,6 +10,10 @@ exports.post = function (req, res, next) {
 let i = 0;
 
 function handle(req, res, next, type) {
+    console.log(`${i}次开始内存情况：@@--@@`);
+    console.log(global.apilist);
+    console.log(`${i}次结束@@--@@`);
+
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
     var data = {
@@ -21,6 +25,7 @@ function handle(req, res, next, type) {
 
     console.log('------------------------  start');
     var api = global.apilist[req.params.cmd];
+    console.log(`！！！！！！！！！！！！！apiDetail     : ${api}`);
     if (api) {
         if (type == api.Method) {
             var sql = getsql(sql, api);
@@ -63,7 +68,6 @@ function handle(req, res, next, type) {
         console.log('Invalid API');
         data.msg = 'Invalid API';
         res.send(data);
-
     }
     console.log(i+ ' request:' + req.params.cmd);
     i++;
