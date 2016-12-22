@@ -9,6 +9,6 @@ module.exports = {
         Name: 'km_com1',
         Description: 'this is a microservice',
         Ver: '1.0.0',
-        Port: 5001,
+        Port: 5004,
     }
 }

@@ -1,9 +1,9 @@
 var net = require("net");
 function connectMicroDiscover() {
 
-    let MS_HOST = process.env.MS_HOST;
+    let MS_HOST ="http://192.168.1.183:5004";//process.env.MS_HOST;
     let MS_NAME = process.env.MS_NAME;
-    let MS_UUID = process.env.MS_UUID;
+    let MS_UUID = "dsgd554654fsg";//process.env.MS_UUID;
     let APP_ID = process.env.APP_ID;
     let APP_KEY = process.env.APP_KEY;
     let transmissionDataJson = {

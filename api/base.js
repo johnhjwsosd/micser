@@ -9,11 +9,7 @@ exports.post = function (req, res, next) {
 
 let i = 0;
 
-function handle(req, res, next, type) {
-    console.log(`${i}次开始内存情况：@@--@@`);
-    console.log(global.apilist);
-    console.log(`${i}次结束@@--@@`);
-
+function handle(req , res, next, type) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
     var data = {
@@ -22,18 +18,15 @@ function handle(req, res, next, type) {
         data: []
     };
     data.data = [];
+    console.log("------start");
 
-    console.log('------------------------  start');
     var api = global.apilist[req.params.cmd];
-    console.log(`！！！！！！！！！！！！！apiDetail     : ${api}`);
     if (api) {
         if (type == api.Method) {
             var sql = getsql(sql, api);
-            console.log('    sql :' +sql);
             sql = precmd(sql, req.params);
             global.db(sql, function (err, vals, fields) {
                 if (err) {
-                    console.log(err.message);
                     data.state = -1;
                     data.msg = err.message;
                 } else {
@@ -49,13 +42,11 @@ function handle(req, res, next, type) {
                             }
                         }
                         //console.log(vals);
-                        console.log('------------------------ end');
                     }
                     data.msg = 'Success';
                 }
                 res.send(data);
-                console.log(data.data);
-                console.log('!!!!! send');
+                console.log("------end");
             });
         } else {
             data.state = -1;
@@ -65,7 +56,6 @@ function handle(req, res, next, type) {
         }
 
     } else {
-        console.log('Invalid API');
         data.msg = 'Invalid API';
         res.send(data);
     }
